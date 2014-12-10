@@ -74,6 +74,25 @@ Trong Rsyslog, cấu hình syslog dựa trên mô hình sau
 
     [facility-level].[Priority-level]  [destination]
 
+Ví dụ:
+
+    cron.*              /var/log/cron
+	
+Dòng này có ý nghĩa tất cả log của deamon cron sẽ được lưu vào /var/log/cron. (*) sau dấu (.) có nghĩa là tất cả các mức Priority 
+sẽ được log lại. Tương tự như vậy, nếu thay cron = * thì có nghĩa là tất cả các Facility với tất cả các Priority được log lại trong /var/log/cron.
+
+	mail.warn           /var/log/mail.warn
+	
+Dòng này có ý nghĩa là với Facility là mail thì tất cả các Priority từ "warning" trở lên (gồm có error, critical....) sẽ được log lại trong /var/log/mail.warn.
+	
+    mail.=info          /var/log/mail.info
+	
+Sử dụng dấu (=) đằng sau dấu (.) có ý nghĩa rằng với Facility là mail thì chỉ có Priority = info mới được log lại.
+	
+	mail.!=info         /var/log/mail.info
+	
+Chèn thêm dấu (!) như trên, có nghĩa là với Facility là mail thì các Priority có mức độ từ info trở lên sẽ được log lại (ngoại trừ chính info).
+	
 ###### Các lệnh dùng để xem log trong linux
 
 Đối với các file ghi log các bạn có thể dùng một số lệnh sau để giúp cho việc xem log
@@ -84,3 +103,4 @@ Trong Rsyslog, cấu hình syslog dựa trên mô hình sau
 |tail | tail [file] | In ra 10 dòng cuối cùng nội dung của file | thêm tùy chọn -n [số dòng] sẽ in ra số dòng theo yêu cầu |
 |head | head [file] | In ra 10 dòng đầu tiên của nôi dụng file |
 |tail -f | tail -f [file] | Dùng để xem ngay lâp tức khi có log đến | Đây là câu lệnh dùng phổ biến nhất nó giúp ta có thể xem ngay lập tức log mới đến, và nó sẽ in ra 10 dong cuối cùng trong nội dung file đó |
+
