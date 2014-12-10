@@ -34,6 +34,7 @@ chúng ta đi vào chi tiết, đầu tiên chúng ta cần thống nhất các 
 
 <a name="coban"></a>
 #### 2. Cơ bản về syslog
+
 Khi các bản ghi được thu thập với cơ chế syslog , ba điều quan trọng phải nắm rõ.
 - Facility level: các tiến trình cần ghi log.
 - Priority level: loại thông điệp cần thu thập dựa trên mức cảnh báo đưa ra.
@@ -108,3 +109,8 @@ Dòng này có ý nghĩa, tất cả các Facility và Priority sẽ được ch
 |head | head [file] | In ra 10 dòng đầu tiên của nôi dụng file |
 |tail -f | tail -f [file] | Dùng để xem ngay lâp tức khi có log đến | Đây là câu lệnh dùng phổ biến nhất nó giúp ta có thể xem ngay lập tức log mới đến, và nó sẽ in ra 10 dong cuối cùng trong nội dung file đó |
 
+<a name="mohinhlab"></a>
+#### 3. Mô hình LAB
+
+Để rõ hơn về cơ chế cũng như cấu hình một mô hình client / server, tôi sẽ đưa ra một vài bài lab cơ bản với dịch vụ Web trên linux, và tôi sẽ giới thiệu 
+một tool dùng trên Win để gửi log đến máy chủ Linux.
