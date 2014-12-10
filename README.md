@@ -14,7 +14,7 @@ Mục Lục
 	
 - [b. Mô hình từ Centos sang Ubuntu](#centos)
 
-- [c. Gửi log từ win sang Ubuntu](#Win)
+- [c. Gửi log từ win sang Ubuntu](#win)
 
 =====================
 <a name="gioithieu"></a>
@@ -35,7 +35,63 @@ chúng ta đi vào chi tiết, đầu tiên chúng ta cần thống nhất các 
 <a name="coban"></a>
 #### 2. Cơ bản về syslog
 
-Khi các bản ghi được thu thập với cơ chế syslog , ba điều quan trọng phải nắm rõ.
+###### File cấu hình Rsyslog
+
+*Đối với Centos*
+
+Các rsyslog daemon được thông tin trong file *rsyslog.conf*, nằm trong thư mục */etc/*.
+
+Về cơ bản, file *rsyslog.conf* cho phép định nghĩa nơi các rsyslog daemon (mail, cron, auth, local0 ....) lưu log.
+
+Các hoạt động cấu hình rsyslog trên *Centos* đều thực hiện trong file này *rsyslog.conf*, bao gồm cả việc cấu hình rsyslog server
+
+```
+# rsyslog v5 configuration file
+...  
+...    
+# Include all config files in /etc/rsyslog.d/  
+IncludeConfig /etc/rsyslog.d/*.conf  
+
+#### RULES ####  
+# Log all kernel messages to the console.  
+# Logging much else clutters up the screen.  
+#kern.*  /dev/console  
+
+# Log anything (except mail) of level info or higher.  
+# Don't log private authentication messages!  
+*.info;mail.none;authpriv.none;cron.none                /var/log/messages  
+
+# The authpriv file has restricted access.  
+authpriv.*                                              /var/log/secure  
+
+# Log all the mail messages in one place.  
+mail.*                                                  -/var/log/maillog  
+
+
+# Log cron stuff  
+cron.*                                                  /var/log/cron  
+
+# Everybody gets emergency messages  
+*.emerg                                                 *  
+
+# Save news errors of level crit and higher in a special file.  
+uucp,news.crit                                          /var/log/spooler  
+
+# Save boot messages also to boot.log  
+local7.*                                                /var/log/boot.log  
+...  
+... 
+
+```
+
+*Đối với Ubuntu*
+
+File dùng cho việc định nghĩa nơi các *rsyslog daemon* lưu log là */etc/rsyslog.d/50-default.conf*
+
+Việc cấu hình rsyslog server được thực hiện trong file *rsyslog.conf*
+
+*Khi các bản ghi được thu thập với cơ chế syslog , ba điều quan trọng phải nắm rõ*
+
 - Facility level: các tiến trình cần ghi log.
 - Priority level: loại thông điệp cần thu thập dựa trên mức cảnh báo đưa ra.
 - Destination: nơi cần gửi các bản ghi log đến.
@@ -43,6 +99,7 @@ Khi các bản ghi được thu thập với cơ chế syslog , ba điều quan 
 ###### Facility
 
 Các facility level sẽ xác định các tiến trình nội bộ. Một số Facility trong Linux:
+
 - auth: messages liên quan đến xác thực (login).
 - cron: messages liên quan đến lập lịch các processes hoặc applications.
 - daemon: messages liên quan đến daemons (internal servers).
@@ -98,6 +155,12 @@ Chèn thêm dấu (!) như trên, có nghĩa là với Facility là mail thì c�
 	
 Dòng này có ý nghĩa, tất cả các Facility và Priority sẽ được chuyển đến máy chủ có ip : 172.16.69.111 theo giao thức UDP và port 514.
 
+*Chú ý 1: @ IP máy chủ log* khi đó các log của mail cũng sẽ gửi đến ip của máy chủ log với port 514 và dùng giao thức UDP. Các bạn nhớ máy chủ log mở port 514 với kiểu truyền vận UPD hay TCP thì trên client cũng phải truyền đúng với giao thức như trên server.
+
+*@IPserver:514* : Đối với giao thức UDP
+
+*@@IPserver:514* : Đối với giao thức TCP
+
 ###### Các lệnh dùng để xem log trong linux
 
 Đối với các file ghi log các bạn có thể dùng một số lệnh sau để giúp cho việc xem log
@@ -114,3 +177,77 @@ Dòng này có ý nghĩa, tất cả các Facility và Priority sẽ được ch
 
 Để rõ hơn về cơ chế cũng như cấu hình một mô hình client / server, tôi sẽ đưa ra một vài bài lab cơ bản với dịch vụ Web trên linux, và tôi sẽ giới thiệu 
 một tool dùng trên Win để gửi log đến máy chủ Linux.
+
+![img](http://i.imgur.com/CZB7Zyh.png "img")
+
+<a name="ubuntu"></a>
+
+###### a. Mô hình từ Ubuntu sang Ubuntu
+
+Lúc này máy Ubuntu chạy dịch vụ http và là máy client gửi bản log về cho máy Ubuntun là log server
+
+- Bước 1: Chỉnh sửa trong file cấu hình `/etc/rsyslog.conf` của máy chủ Log-server để nó có thể nhận các bản tin log từ các client gửi về.
+
+<img class="image__pic js-image-pic" src="http://i.imgur.com/667Q082.png" alt="" id="screenshot-image">
+
+Nếu bạn muốn trên máy chủ log tạo thành các thư mục lưu riêng log đối với từng máy Client gửi về thêm dòng này vào file cấu hình
+
+<img class="image__pic js-image-pic" src="http://i.imgur.com/jNpIFEw.png" alt="" id="screenshot-image">
+
+Và chuyển chủ sở hưu tập tin /log/var cho syslog để nó có thể tạo các file và thư mục trong /var/log
+```
+chown syslog.syslog /var/log
+```
+
+
+- Bước 2: Thêm  dòng này trong file cấu hình `/etc/rsyslog.conf` của máy Client 
+```
+*.*			@ [Địa chỉ IP của máy log-server]
+```
+
+- Bước 3: 
+
+Thêm dòng sau đây vào file cấu hình của apache trong máy client: `/etc/apache2/apache2.conf`
+```
+ErrorLog syslog:local1
+```
+Thêm dòng sau vào file `/etc/apache2/sites-enabled/000-default.conf`
+```
+CustomLog "| /usr/bin/logger -thttpacces -plocal1.info"
+```
+*Note: Dòng lệnh trên có ý nghĩa chuyển tất cả các Log của phần CustomLog vào đầu vào lệnh logger và lệnh logger cho ra đầu ra của log với nguồn là httpacces và với selector là local1.info. Bạn có thể tìm hiểu thêm lệnh logger tại [đây](http://linux.about.com/library/cmd/blcmdl1_logger.htm)*
+
+Lúc này trên máy chủ log nó sẽ tạo ra một thư mục có tên của máy client và trong đó sẽ chứa tất cả các log của máy Client đó.
+
+<img class="image__pic js-image-pic" src="http://i.imgur.com/EXhzms9.png" alt="" id="screenshot-image">
+
+<a name="centos"></a>
+
+###### b. Mô hình Centos sang Ubuntu
+
+Lúc này máy Centos chạy dịch vụ http và là máy client gửi bản log về cho máy Ubuntun là log server
+
+Phần cấu hình trên máy log server hoàn toàn như cấu hình đối với mô hình Ubuntu sang Ubuntu
+
+Phần cấu hình trên máy Client là Centos
+
+- Bước 1: Chỉnh sửa file `/etc/ryslog.conf`:thêm dòng sau đây vào file cấu hình syslog
+```
+*.* 		@ <địa chỉ ip của log server>
+```
+
+- Bước 2: Chỉnh sửa file cấu hình của http `/etc/httpd/conf/httpd.conf`
+
+Ban thêm 2 dòng sau đây vào file cấu hình
+```
+ErrorLog syslog:local2
+CustomLog "| /usr/bin/logger -thttp_acces -plocal2.info" combined
+```
+*Chú ý 1:* Bạn hay chắc chắn rằng trong file cấu hình của httpd chỉ có duy nhất dòng ErrorLog bạn vừa nhâp, những ErrorLog khác bạn hãy chuyển thành comment.
+
+*Chú ý 2:* Chúng tôi đang lab với trường hợp tắt iptables. CÒn nếu bạn muốn lab trong trường hợp bạn bật iptables lên, hãy chắc chắn bạn hiểu về iptables nhé.
+
+<a name="win"></a>
+
+###### c. Gửi log từ win sang ubuntu
+
