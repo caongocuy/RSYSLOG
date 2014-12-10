@@ -202,7 +202,7 @@ chown syslog.syslog /var/log
 
 - Bước 2: Thêm  dòng này trong file cấu hình `/etc/rsyslog.conf` của máy Client 
 ```
-*.*			@ [Địa chỉ IP của máy log-server]
+*.*			@ [Địa chỉ IP của máy log-server]:514
 ```
 
 - Bước 3: 
@@ -233,7 +233,7 @@ Phần cấu hình trên máy Client là Centos
 
 - Bước 1: Chỉnh sửa file `/etc/ryslog.conf`:thêm dòng sau đây vào file cấu hình syslog
 ```
-*.* 		@ <địa chỉ ip của log server>
+*.* 		@ <địa chỉ ip của log server>:514
 ```
 
 - Bước 2: Chỉnh sửa file cấu hình của http `/etc/httpd/conf/httpd.conf`
@@ -251,3 +251,19 @@ CustomLog "| /usr/bin/logger -thttp_acces -plocal2.info" combined
 
 ###### c. Gửi log từ win sang ubuntu
 
+Để chuyển tiếp các bản tin log từ một máy Windows tới một máy chủ rsyslog, chúng ta cần một Windows syslog agent. Có rất nhiều các 
+agent có thể chạy trên Windows, ở đây tôi dùng [Datagram SyslogAgent](http://www.syslogserver.com/download.html) , đó là một phần mềm miễn phí.
+
+Sau khi tải về và cài đặt các agent, chúng ta cần phải cấu hình nó để chạy như một dịch vụ. Xác định giao thức, ip, cổng của máy chủ rsyslog từ xa, và những loại bản ghi được truyền đi.
+
+![img](http://i.imgur.com/YG8dw0g.png "img") 
+
+Sau khi thiết lập xong, chúng ta đã có thể bắt đầu dịch vụ và xem các tập tin log trên máy chủ rsyslog.
+
+Tài liệu tham khảo
+
+[Link trang chủ của syslog](http://www.rsyslog.com/doc/master/index.html)
+
+[Link 1](https://www.digitalocean.com/community/tutorials/how-to-view-and-configure-linux-logs-on-ubuntu-and-centos)
+
+[Link 2](http://xmodulo.com/configure-syslog-server-linux.html)
