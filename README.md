@@ -175,7 +175,8 @@ Dòng này có ý nghĩa, tất cả các Facility và Priority sẽ được ch
 <a name="mohinhlab"></a>
 #### 3. Mô hình LAB
 
-Để rõ hơn về cơ chế cũng như cấu hình một mô hình client / server, tôi sẽ đưa ra một vài bài lab cơ bản với dịch vụ Web trên linux, và tôi sẽ giới thiệu 
+Để rõ hơn về cơ chế cũng như cấu hình một mô hình client / server. Theo mô hình dưới một máy chủ rsyslog có thể nhận log của nhiều loại client 
+nhưng tôi sẽ trình bày theo cách tách nhỏ ra(1-1) thành nhiều kịch bản, tôi sẽ đưa ra một vài bài lab cơ bản với dịch vụ Web trên linux, và tôi sẽ giới thiệu 
 một tool dùng trên Win để gửi log đến máy chủ Linux.
 
 ![img](http://i.imgur.com/CZB7Zyh.png "img")
