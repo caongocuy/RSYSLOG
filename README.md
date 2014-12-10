@@ -93,6 +93,10 @@ Sử dụng dấu (=) đằng sau dấu (.) có ý nghĩa rằng với Facility 
 	
 Chèn thêm dấu (!) như trên, có nghĩa là với Facility là mail thì các Priority có mức độ từ info trở lên sẽ được log lại (ngoại trừ chính info).
 	
+	*.*					@172.16.69.111:514
+	
+Dòng này có ý nghĩa, tất cả các Facility và Priority sẽ được chuyển đến máy chủ có ip : 172.16.69.111 theo giao thức UDP và port 514.
+
 ###### Các lệnh dùng để xem log trong linux
 
 Đối với các file ghi log các bạn có thể dùng một số lệnh sau để giúp cho việc xem log
