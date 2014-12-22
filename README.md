@@ -161,6 +161,14 @@ Dòng này có ý nghĩa, tất cả các Facility và Priority sẽ được ch
 
 *@@IPserver:514* : Đối với giao thức TCP
 
+Trong file cấu hình các bạn có thể nhìn thấy một vài dòng có định dạng như *-/var/log/kern.log*, vậy dấu trừ (-) ở phía trước đường dẫn thư mục
+có ý nghĩa là gì.
+
+kern.*                          -/var/log/kern.log
+
+các bạn có thể tìm thấy nó ở [đây](http://www.rsyslog.com/doc/master/compatibility/v3compatibility.html). Đại ý của nó là : rsyslog muốn giữ sự tương thích với syslog nên mặc định nó sẽ đồng bộ các file nếu không có quy định nào khác *(bằng việc để 
+dấu trừ (-) phía trước đường dẫn file log đầu ra)*.
+
 ###### Các lệnh dùng để xem log trong linux
 
 Đối với các file ghi log các bạn có thể dùng một số lệnh sau để giúp cho việc xem log
@@ -191,9 +199,15 @@ Lúc này máy Ubuntu chạy dịch vụ http và là máy client gửi bản lo
 
 <img class="image__pic js-image-pic" src="http://i.imgur.com/667Q082.png" alt="" id="screenshot-image">
 
-Nếu bạn muốn trên máy chủ log tạo thành các thư mục lưu riêng log đối với từng máy Client gửi về thêm dòng này vào file cấu hình
+Nếu bạn muốn trên máy chủ log tạo thành các thư mục lưu riêng log đối với từng máy Client gửi về thêm dòng này vào file cấu hình *rsyslog.conf*. Việc định nghĩa ra các template như thế này, nhằm mục đích quản lí log của 
+các máy client tốt hơn (vì mỗi client là một thư mục), nếu không log của client sẽ được báo hết lại trên cùng 1 file tương ứng ở server, lượng client lớn thì điều này làm hạn chế việc phân tích log rất nhiều.
 
-<img class="image__pic js-image-pic" src="http://i.imgur.com/jNpIFEw.png" alt="" id="screenshot-image">
+Bạn add thêm các dòng sau vào cuối file *rsyslog.conf*
+
+```
+$template TmplAuth,"/var/log/%HOSTNAME%/%PROGRAMNAME%.log"
+*.*     ?TmplAuth
+```
 
 Và chuyển chủ sở hưu tập tin /log/var cho syslog để nó có thể tạo các file và thư mục trong /var/log
 ```
