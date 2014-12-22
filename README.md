@@ -166,8 +166,8 @@ có ý nghĩa là gì.
 
     kern.*                          -/var/log/kern.log
 
-các bạn có thể tìm thấy nó ở [đây](http://www.rsyslog.com/doc/master/compatibility/v3compatibility.html). Đại ý của nó là : rsyslog giữ sự tương thích với syslog nên mặc định nó sẽ đồng bộ các file nếu không có quy định nào khác *(bằng việc để 
-dấu trừ (-) phía trước đường dẫn file log đầu ra)*.
+Các bạn có thể tìm thấy nó ở [đây](http://www.rsyslog.com/doc/master/compatibility/v3compatibility.html). Đại ý của nó là : rsyslog giữ sự tương thích với syslog nên mặc định nó sẽ đồng bộ các file nếu không có quy định nào khác *(bằng việc để 
+dấu trừ (-) phía trước đường dẫn file log đầu ra)*. Nếu bạn sửu dụng nó, ban có thể sẽ bị mất thông tin nếu hệ thống bị treo, nhưng bù lại bạn nhận được hiệu suất cao hơn trong việc IO file.
 
 Bạn cũng có thể tự tạo ra các file log cho các dịch vụ. ví dụ như:
 
