@@ -164,7 +164,7 @@ Dòng này có ý nghĩa, tất cả các Facility và Priority sẽ được ch
 Trong file cấu hình các bạn có thể nhìn thấy một vài dòng có định dạng như *-/var/log/kern.log*, vậy dấu trừ (-) ở phía trước đường dẫn thư mục
 có ý nghĩa là gì.
 
-kern.*                          -/var/log/kern.log
+    kern.*                          -/var/log/kern.log
 
 các bạn có thể tìm thấy nó ở [đây](http://www.rsyslog.com/doc/master/compatibility/v3compatibility.html). Đại ý của nó là : rsyslog muốn giữ sự tương thích với syslog nên mặc định nó sẽ đồng bộ các file nếu không có quy định nào khác *(bằng việc để 
 dấu trừ (-) phía trước đường dẫn file log đầu ra)*.
