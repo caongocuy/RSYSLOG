@@ -1,4 +1,4 @@
-Cấu hình Syslog server với Rsyslog trên Ubuntu14.04.1
+Configure Syslog server use Rsyslog in Ubuntu14.04.1
 ======
 Mục Lục
 
@@ -39,11 +39,11 @@ chúng ta đi vào chi tiết, đầu tiên chúng ta cần thống nhất các 
 
 *Đối với Centos*
 
-Các rsyslog daemon được thông tin trong file *rsyslog.conf*, nằm trong thư mục */etc/*.
+Các rsyslog daemon được định nghĩa trong file *rsyslog.conf*, nằm trong thư mục */etc/*.
 
 Về cơ bản, file *rsyslog.conf* cho phép định nghĩa nơi các rsyslog daemon (mail, cron, auth, local0 ....) lưu log.
 
-Các hoạt động cấu hình rsyslog trên *Centos* đều thực hiện trong file này *rsyslog.conf*, bao gồm cả việc cấu hình rsyslog server
+Các hoạt động cấu hình rsyslog trên *Centos* đều thực hiện trong file này *rsyslog.conf*, bao gồm cả việc cấu hình rsyslog như một Log server remote.
 
 ```
 # rsyslog v5 configuration file
@@ -86,7 +86,7 @@ local7.*                                                /var/log/boot.log
 
 *Đối với Ubuntu*
 
-File dùng cho việc định nghĩa nơi các *rsyslog daemon* lưu log là */etc/rsyslog.d/50-default.conf*
+File dùng cho việc định nghĩa nơi các *rsyslog daemon* lưu log thường là */etc/rsyslog.d/50-default.conf*, ngoài file này bạn cũng có thể định nghĩa ra các file khác tương tự trong thư mục *rsyslog.d/*.
 
 Việc cấu hình rsyslog server được thực hiện trong file *rsyslog.conf*
 
