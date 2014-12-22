@@ -166,8 +166,21 @@ có ý nghĩa là gì.
 
     kern.*                          -/var/log/kern.log
 
-các bạn có thể tìm thấy nó ở [đây](http://www.rsyslog.com/doc/master/compatibility/v3compatibility.html). Đại ý của nó là : rsyslog muốn giữ sự tương thích với syslog nên mặc định nó sẽ đồng bộ các file nếu không có quy định nào khác *(bằng việc để 
+các bạn có thể tìm thấy nó ở [đây](http://www.rsyslog.com/doc/master/compatibility/v3compatibility.html). Đại ý của nó là : rsyslog giữ sự tương thích với syslog nên mặc định nó sẽ đồng bộ các file nếu không có quy định nào khác *(bằng việc để 
 dấu trừ (-) phía trước đường dẫn file log đầu ra)*.
+
+Bạn cũng có thể tự tạo ra các file log cho các dịch vụ. ví dụ như:
+
+mặc định thì *auth.log* sẽ chứa các bản tin về auth, ssh... như dưới
+
+```
+auth,authpriv.*                 /var/log/auth.log
+```
+
+Để chuyển các bản tin của auth, ssh ... sang file khác bạn chỉ cần thêm dòng như thế này.
+```
+auth,authpriv.*                 /var/log/test.log
+```
 
 ###### Các lệnh dùng để xem log trong linux
 
