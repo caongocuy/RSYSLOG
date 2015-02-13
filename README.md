@@ -1,4 +1,4 @@
-Configure Syslog server use Rsyslog in Ubuntu14.04.1
+Configure RSyslog server in Ubuntu14.04.1
 ======
 Mục Lục
 
