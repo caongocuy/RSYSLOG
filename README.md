@@ -7,10 +7,11 @@ Mục Lục
 [2. Cơ bản về syslog](#coban)
 - [a. Mô hình từ Ubuntu sang Ubuntu](#ubuntu)
 - [a. Mô hình từ Ubuntu sang Ubuntu](#ubuntu)
-- [a. Mô hình từ Ubuntu sang Ubuntu](#ubuntu)				
+- [a. Mô hình từ Ubuntu sang Ubuntu](#ubuntu)
+				
 [3. Mô hình LAB](#mohinhlab)
 				
-[4. Lab mô hình log với dịch vụ WEB](#web)
+[4. Lab với dịch vụ Apache2](#web)
 	
 - [a. Mô hình từ Ubuntu sang Ubuntu](#ubuntu)
 	
@@ -204,8 +205,9 @@ một tool dùng trên Win để gửi log đến máy chủ Linux.
 
 ![img](http://i.imgur.com/CZB7Zyh.png "img")
 
-<a name="ubuntu"></a>
+<a name="web"></a>
 #### 4. Lab với dịch vụ Apache2
+<a name="ubuntu"></a>
 ###### a. Mô hình từ Ubuntu sang Ubuntu
 
 Lúc này máy Ubuntu chạy dịch vụ http và là máy client gửi bản log về cho máy Ubuntun là log server
