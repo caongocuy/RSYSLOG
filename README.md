@@ -243,7 +243,7 @@ ErrorLog syslog:local1
 Thêm dòng sau vào file `/etc/apache2/sites-enabled/000-default.conf`
 ```
 ErrorLog syslog:local1
-CustomLog "| /usr/bin/logger -thttpacces -plocal1.info"
+CustomLog "| /usr/bin/logger -t acces -plocal1.info"
 ```
 *Note: Dòng lệnh trên có ý nghĩa chuyển tất cả các Log của phần CustomLog vào đầu vào lệnh logger và lệnh logger cho ra đầu ra của log với nguồn là httpacces và với selector là local1.info. Bạn có thể tìm hiểu thêm lệnh logger tại [đây](http://linux.about.com/library/cmd/blcmdl1_logger.htm)*
 
@@ -271,7 +271,7 @@ Phần cấu hình trên máy Client là Centos
 Ban thêm 2 dòng sau đây vào file cấu hình
 ```
 ErrorLog syslog:local2
-CustomLog "| /usr/bin/logger -thttp_acces -plocal2.info" combined
+CustomLog "| /usr/bin/logger -t http_acces -plocal2.info" combined
 ```
 *Chú ý 1:* Bạn hay chắc chắn rằng trong file cấu hình của httpd chỉ có duy nhất dòng ErrorLog bạn vừa nhâp, những ErrorLog khác bạn hãy chuyển thành comment.
 
