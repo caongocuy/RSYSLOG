@@ -221,6 +221,7 @@ Bạn add thêm các dòng sau vào cuối file *rsyslog.conf*
 $template TmplAuth,"/var/log/%HOSTNAME%/%PROGRAMNAME%.log"
 *.*     ?TmplAuth
 ```
+`%HOSTNAME%` : thông số này sẽ quy ước tạo ra trên server 1 thư mục trùng với tên hostname của client. Nếu bạn muốn tên thư mục là IP của server thì thay `%HOSTNAME% = %fromhost-ip%`.
 
 Và chuyển chủ sở hưu tập tin /log/var cho syslog để nó có thể tạo các file và thư mục trong /var/log
 ```
