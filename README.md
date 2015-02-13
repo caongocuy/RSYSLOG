@@ -242,6 +242,7 @@ ErrorLog syslog:local1
 ```
 Thêm dòng sau vào file `/etc/apache2/sites-enabled/000-default.conf`
 ```
+ErrorLog syslog:local1
 CustomLog "| /usr/bin/logger -thttpacces -plocal1.info"
 ```
 *Note: Dòng lệnh trên có ý nghĩa chuyển tất cả các Log của phần CustomLog vào đầu vào lệnh logger và lệnh logger cho ra đầu ra của log với nguồn là httpacces và với selector là local1.info. Bạn có thể tìm hiểu thêm lệnh logger tại [đây](http://linux.about.com/library/cmd/blcmdl1_logger.htm)*
